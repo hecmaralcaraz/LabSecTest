@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3.6
 # Hèctor Martínez
 # 05/04/2019
 
@@ -63,13 +63,53 @@ def environment():
             return 2
             y = 1
         print('Please type 1 or 2')
+
+def generate_MV(path,hostname,network):
+    '''Generate/write Vagrantfile'''
+    try:
+        file = open(path + 'Vagrantfile', "w")
+    except FileNotFoundError:
+        print("File doesn't exist")
+
+    file.write('Vagrant.configure("2") do |config|' + os.linesep)
+    file.write('    config.vm.box = "debian/jessie64"' + os.linesep)  # system of the virtual machine
+    file.write('    config.vm.hostname = "' + hostname + '"' + os.linesep)  # hostname of the virtual machine 
+    
+    # 1 = ip server, 2 = ip client
+    if network == '1':  # IP static
+        file.write('    config.vm.network "private_network", ip: "192.168.0.1",' + os.linesep)
+        file.write('    virtualbox__intnet: true' + os.linesep)
+    elif network == '2':  # IP with DHCP
+        file.write('    config.vm.network "private_network", type: "dhcp"' + os.linesep)
+
+    file.write('    config.vm.provider "virtualbox" do |vb|' + os.linesep)
+    file.write('        vb.memory = "512"' + os.linesep)  # RAM of the virtual machine
+    file.write('    end' + os.linesep)
+    file.write('end')
+    file.close()
+
 def generate_environment():
     '''Generate the environment with Vagrant'''
+    # Generate server
+    path = 'server/'
+    hostname = 'server.sectesting.com'
+    network = '1'
+    generate_MV(path,hostname,network)
+
+    #Generate client
+    path = 'client/'
+    hostname = 'server.sectesting.com'
+    network = '2'
+    generate_MV(path,hostname,network)
+
+    #Generate tester
+    path = 'tester/'
+    hostname = 'tester.sectesting.com' ############ donde estará el atacante???
 
 # Estructure
 
 requirments()  # show/install the requirments to use this laboratory
 welcome()  # Welcome to learning
 environment()  # Select the environment
-generate_environment() 
+generate_environment()
 
