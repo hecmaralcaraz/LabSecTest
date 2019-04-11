@@ -113,6 +113,12 @@ def generate_environment():
 def services_by_default():
     '''Install all services and all configurations in server'''
     os.system('touch server/script.sh')
+    
+    bind_dns()
+
+def bind_dns():
+    '''Install and configurate dns server(bind)'''
+    
 
 # Estructure
 
