@@ -6,6 +6,8 @@ import os
 
 # Variables
 
+type_env = int(0)
+
 
 # Funtions
 def requirments():
@@ -104,12 +106,30 @@ def generate_environment():
 
     #Generate tester
     path = 'tester/'
-    hostname = 'tester.sectesting.com' ############ donde estará el atacante???
+    hostname = 'tester.sectesting.com'
+    network = '2'
+    generate_MV(path,hostname,network)
+
+def services_by_default():
+    '''Install all services and all configurations in server'''
+    os.system('touch server/script.sh')
 
 # Estructure
 
 requirments()  # show/install the requirments to use this laboratory
 welcome()  # Welcome to learning
-environment()  # Select the environment
+type_env = environment()  # Select the environment
 generate_environment()
+if type_env == 1:
+    services_by_default()
+elif type_env == 2:
+    print('Personalized')
+
+
+
+
+
+
+
+
 
