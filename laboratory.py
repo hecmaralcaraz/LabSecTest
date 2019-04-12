@@ -1,7 +1,7 @@
 #!/usr/bin/python3.6
 # Hèctor Martínez
 # 05/04/2019
-#
+
 import os
 
 # Variables
@@ -79,14 +79,16 @@ def generate_MV(path,hostname,network):
     
     # 1 = ip server, 2 = ip client
     if network == '1':  # IP static
-        file.write('    config.vm.network "private_network", ip: "192.168.0.1",' + os.linesep)
+        file.write('    config.vm.network "private_network", ip: "192.168.0.13",' + os.linesep)
         file.write('    virtualbox__intnet: true' + os.linesep)
     elif network == '2':  # IP with DHCP
-        file.write('    config.vm.network "private_network", type: "dhcp"' + os.linesep)
+        file.write('    config.vm.network "private_network", type: "dhcp",' + os.linesep)
+        file.write('virtualbox__intnet: sectesting' + os.linesep)
 
     file.write('    config.vm.provider "virtualbox" do |vb|' + os.linesep)
     file.write('        vb.memory = "512"' + os.linesep)  # RAM of the virtual machine
     file.write('    end' + os.linesep)
+    file.write('config.vm.provision "shell", path: "script.sh"' + os.linesep)    
     file.write('end')
     file.close()
 
@@ -100,7 +102,7 @@ def generate_environment():
 
     #Generate client
     path = 'client/'
-    hostname = 'server.sectesting.com'
+    hostname = 'client.sectesting.com'
     network = '2'
     generate_MV(path,hostname,network)
 
@@ -115,20 +117,40 @@ def services_by_default():
     os.system('touch server/script.sh')
     os.system('echo "sudo apt update -y" > server/script.sh')
     
-    bind_dns()
+    service_dns()
+    service_dhcp()
 
-def bind_dns():
-    '''Install and configurate dns server(bind)'''
+def service_dns():
+    '''Install and configure dns service (bind)'''
     
     try:
         file = open('server/script.sh', "a")
     except FileNotFoundError:
         print("File server/script.sh doesn't exist")
-    
-    file.write('hola2' + os.linesep)
+
+    # add all necessary to script.sh file 
+    file.write('#DNS service' + os.linesep)
+    file.write('apt install -y bind9' + os.linesep)
+    file.write('sudo cp /vagrant/services/dns/bind/* /etc/bind/' + os.linesep)
+    file.write('sudo cp /vagrant/services/dns/resolv.conf /etc/resolv.conf' + os.linesep)
+    file.write('sudo service bind9 restart' + os.linesep)
     file.close()
 
-    
+def service_dhcp():
+    '''Install and configure dhcp service'''
+
+    try:
+        file = open('server/script.sh', "a")
+    except FileNotFoundError:
+        print("File server/script.sh doesn't exist")
+
+    # add all necessary to script.sh file
+    file.write('#DHCP service' + os.linesep)
+    file.write('sudo apt install -y isc-dhcp-server' + os.linesep)
+    file.write('sudo cp /vagrant/services/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf' + os.linesep)
+    file.write('sudo service isc-dhcp-server restart' + os.linesep)
+    file.close()
+ 
 
 # Estructure
 
