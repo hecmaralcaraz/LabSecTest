@@ -1,7 +1,7 @@
 #!/usr/bin/python3.6
 # Hèctor Martínez
 # 05/04/2019
-
+#
 import os
 
 # Variables
@@ -71,7 +71,7 @@ def generate_MV(path,hostname,network):
     try:
         file = open(path + 'Vagrantfile', "w")
     except FileNotFoundError:
-        print("File doesn't exist")
+        print("File 'Vagrantfile' doesn't exist")
 
     file.write('Vagrant.configure("2") do |config|' + os.linesep)
     file.write('    config.vm.box = "debian/jessie64"' + os.linesep)  # system of the virtual machine
@@ -113,11 +113,21 @@ def generate_environment():
 def services_by_default():
     '''Install all services and all configurations in server'''
     os.system('touch server/script.sh')
+    os.system('echo "sudo apt update -y" > server/script.sh')
     
     bind_dns()
 
 def bind_dns():
     '''Install and configurate dns server(bind)'''
+    
+    try:
+        file = open('server/script.sh', "a")
+    except FileNotFoundError:
+        print("File server/script.sh doesn't exist")
+    
+    file.write('hola2' + os.linesep)
+    file.close()
+
     
 
 # Estructure
