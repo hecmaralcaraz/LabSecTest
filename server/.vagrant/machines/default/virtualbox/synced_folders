@@ -1,1 +1,1 @@
-{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/hector.martinez/Escriptori/scripts/LabSecTest/server","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/illidan/Escritorio/Scripts/LabSecTest/server","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

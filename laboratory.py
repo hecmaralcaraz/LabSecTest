@@ -67,7 +67,7 @@ def environment():
         print('Please type 1 or 2')
 
 def generate_MV(path,hostname,network):
-    '''Generate/write Vagrantfile'''
+    '''Generate/write Vagrantfile with vagrant configurations'''
     try:
         file = open(path + 'Vagrantfile', "w")
     except FileNotFoundError:
@@ -80,10 +80,12 @@ def generate_MV(path,hostname,network):
     # 1 = ip server, 2 = ip client
     if network == '1':  # IP static
         file.write('    config.vm.network "private_network", ip: "192.168.0.13",' + os.linesep)
-        file.write('    virtualbox__intnet: true' + os.linesep)
+        file.write('    virtualbox__intnet: "sectesting"' + os.linesep)
     elif network == '2':  # IP with DHCP
-        file.write('    config.vm.network "private_network", type: "dhcp",' + os.linesep)
-        file.write('virtualbox__intnet: sectesting' + os.linesep)
+        file.write('    config.vm.network "private_network", ip: "192.168.0.10",' + os.linesep)
+        file.write('    virtualbox__intnet: "sectesting",' + os.linesep)
+        file.write('    auto_config: false' + os.linesep)
+
 
     file.write('    config.vm.provider "virtualbox" do |vb|' + os.linesep)
     file.write('        vb.memory = "512"' + os.linesep)  # RAM of the virtual machine
@@ -98,25 +100,55 @@ def generate_environment():
     path = 'server/'
     hostname = 'server.sectesting.com'
     network = '1'
-    generate_MV(path,hostname,network)
+    generate_MV(path,hostname,network)  # create Vagrantfile
 
     #Generate client
     path = 'client/'
     hostname = 'client.sectesting.com'
     network = '2'
-    generate_MV(path,hostname,network)
+    generate_MV(path,hostname,network)  # create Vagrantfile
+    generate_conf_client()  # generate client configurations (script.sh)
 
     #Generate tester
     path = 'tester/'
     hostname = 'tester.sectesting.com'
     network = '2'
-    generate_MV(path,hostname,network)
+    generate_MV(path,hostname,network)  # create Vagrantfile
+    generate_conf_tester()  # generate tester configurations (script.sh)
 
-def services_by_default():
-    '''Install all services and all configurations in server'''
     os.system('touch server/script.sh')
     os.system('echo "sudo apt update -y" > server/script.sh')
+
+def generate_conf_client():
+    '''Generate client configuration(script.sh)'''
+    os.system('touch client/script.sh')
     
+    try:
+        file = open('client/script.sh', "w")
+    except FileNotFoundError:
+        print("File 'Vagrantfile' doesn't exist")
+
+    # network configuration
+    file.write('sudo echo "auto eth1" >> /etc/network/interfaces' + os.linesep)
+    file.write('sudo echo "iface eth1 inet dhcp" >> /etc/network/interfaces' + os.linesep)
+    file.close()
+
+def generate_conf_tester():
+    '''Generate tester configuration (script.sh)'''
+    os.system('touch tester/script.sh')
+
+    try:
+        file = open('tester/script.sh', "w")
+    except FileNotFoundError:
+        print("File 'Vagrantfile' doesn't exist")
+
+    # network configuration
+    file.write('sudo echo "auto eth1" >> /etc/network/interfaces' + os.linesep)
+    file.write('sudo echo "iface eth1 inet dhcp" >> /etc/network/interfaces' + os.linesep)
+    file.close()
+
+def services_by_default():
+    '''Install all services and all configurations in server''' 
     service_dns()
     service_dhcp()
 
@@ -155,11 +187,11 @@ def service_dhcp():
 # Estructure
 
 requirments()  # show/install the requirments to use this laboratory
-welcome()  # Welcome to learning
-type_env = environment()  # Select the environment
-generate_environment()
+welcome()  # welcome to learning
+type_env = environment()  # select the environment
+generate_environment()  # generate the environment that you have selected
 if type_env == 1:
-    services_by_default()
+    services_by_default()  # install services by default
 elif type_env == 2:
     print('Personalized')
 
