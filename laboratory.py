@@ -131,6 +131,7 @@ def generate_conf_client():
     # network configuration
     file.write('sudo echo "auto eth1" >> /etc/network/interfaces' + os.linesep)
     file.write('sudo echo "iface eth1 inet dhcp" >> /etc/network/interfaces' + os.linesep)
+    file.write('useradd -p $(openssl passwd laia) -d /home/laia -m -s /bin/bash laia' + os.linesep)
     file.close()
 
 def generate_conf_tester():
@@ -151,6 +152,8 @@ def services_by_default():
     '''Install all services and all configurations in server''' 
     service_dns()
     service_dhcp()
+    service_mysql()
+    service_ftp()
 
 def service_dns():
     '''Install and configure dns service (bind)'''
@@ -161,7 +164,7 @@ def service_dns():
         print("File server/script.sh doesn't exist")
 
     # add all necessary to script.sh file 
-    file.write('#DNS service' + os.linesep)
+    file.write('\n#DNS service' + os.linesep)
     file.write('apt install -y bind9' + os.linesep)
     file.write('sudo cp /vagrant/services/dns/bind/* /etc/bind/' + os.linesep)
     file.write('sudo cp /vagrant/services/dns/resolv.conf /etc/resolv.conf' + os.linesep)
@@ -177,12 +180,42 @@ def service_dhcp():
         print("File server/script.sh doesn't exist")
 
     # add all necessary to script.sh file
-    file.write('#DHCP service' + os.linesep)
+    file.write('\n#DHCP service' + os.linesep)
     file.write('sudo apt install -y isc-dhcp-server' + os.linesep)
     file.write('sudo cp /vagrant/services/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf' + os.linesep)
     file.write('sudo service isc-dhcp-server restart' + os.linesep)
     file.close()
- 
+
+def service_mysql():
+    '''Install and configure mysql'''
+
+    try:
+        file = open('server/script.sh', "a")
+    except FileNotFoundError:
+        print("File server/script.sh doesn't exist")
+
+    file.write('\n#MYSQL service' + os.linesep)
+    file.close()
+
+def service_ftp():
+    '''Install and configure ftp service'''
+
+    try:
+        file = open('server/script.sh', "a")
+    except FileNotFoundError:
+        print("File server/script.sh doesn't exist")
+
+    file.write('\n#FTP service' + os.linesep)
+    file.write('apt-get install -y vsftpd' + os.linesep)
+    file.write('mkdir -p /ftp/anonymous/data' + os.linesep)
+    file.write('chown ftp:ftp /ftp/anonymous/data' + os.linesep)
+    file.write('cp /vagrant/services/ftp/vsftpd.conf /etc/vsftpd.conf' + os.linesep)
+    file.write('cp /vagrant/services/ftp/vsftpd.userlist /etc/vsftpd.userlist' + os.linesep)
+    file.write('service vsftpd restart' + os.linesep)
+    file.write('' + os.linesep)
+
+    file.close()
+
 
 # Estructure
 
