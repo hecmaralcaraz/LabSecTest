@@ -1,6 +1,6 @@
 #!/usr/bin/python3.6
 # Hèctor Martínez
-# 05/04/2019 2
+# 05/04/2019
 
 import os
 
