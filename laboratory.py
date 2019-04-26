@@ -173,14 +173,21 @@ def services_by_personalized():
         service = sel_services_graphical()
     elif option == 2:
         service = sel_services_text()
+    print(service)
 
 
 def sel_services_graphical():
     '''Select services with graphics'''
-
-    os.system('sleep 1')
+    service = []
+    # Open a graphic multiselect (services)
     os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" --separator="\n" > .services.txt')
+    
+    # Add all lines in a list
+    file = open(".services.txt")
+    for line in file.readlines():
+        service.append(line[:-1])
 
+    return service
 
 
 def sel_services_text():

@@ -1,6 +1,12 @@
-from subprocess import Popen
+lista = []
+f = open(".services.txt")
+for linea in f.readlines():
+    lista.append(linea)
 
-proceso = Popen(['ls'])
-proceso.wait()
+print(lista)
 
-print(proceso)
+
+for x in range(0,len(lista)):
+    lista[x] = lista[x][:-1]
+
+print(lista)
