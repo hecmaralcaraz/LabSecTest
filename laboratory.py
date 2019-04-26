@@ -255,7 +255,7 @@ welcome()  # welcome to learning
 type_env = environment()  # select the environment
 generate_environment()  # generate the environment that you have selected
 if type_env == 1:
-    services_by_default()  # install services by default
+    services_by_default()  # install services by defaultt
 elif type_env == 2:
     services_by_personalized()
 
