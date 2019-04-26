@@ -45,17 +45,10 @@ def welcome():
     print('After the installation to acces the MV tester you need type "vagrant ssh" in the console shell.\n')   
     input("Press ENTER to continue...")
 
-def environment():
-    '''Select the environment'''
-    print("\n")
-    print('You can select the environment (defualt or personalized).')
-    print('If you select "Defualt" this program create a environment with the services and configurations by default.')
-    print('If you select "Personalized" you can chose all server services you want.\n')
+def check_two_options():
+    '''Check two options'''
     y = bool(0)
     option = int(0)
-    print("Choose the environment:")
-    print("1. Default")
-    print("2. Personalized")  
     while y == 0:
         option = input("select an option (1|2) \n>")
         if option == '1':
@@ -64,7 +57,18 @@ def environment():
         elif option == '2':
             return 2
             y = 1
-        print('Please type 1 or 2')
+        print('\nPlease type 1 or 2')
+
+def environment():
+    '''Select the environment'''
+    print("\n")
+    print('You can select the environment (defualt or personalized).')
+    print('If you select "Defualt" this program create a environment with the services and configurations by default.')
+    print('If you select "Personalized" you can chose all server services you want.\n')
+    print("Choose the environment:")
+    print("1) Default")
+    print("2) Personalized")  
+    return check_two_options()
 
 def generate_MV(path,hostname,network):
     '''Generate/write Vagrantfile with vagrant configurations'''
@@ -155,6 +159,33 @@ def services_by_default():
     service_mysql()
     service_ftp()
 
+def services_by_personalized():
+    '''Install the services you want'''
+    services = []
+    option = int(0)
+    os.system('clear')
+    print('You have selected to install the services in a personalized way.') 
+    print('You have two ways of doing it: \n')
+    print('1) Graphical (recommended)')
+    print('2) Text\n')
+    option = check_two_options()
+    if option == 1:
+        service = sel_services_graphical()
+    elif option == 2:
+        service = sel_services_text()
+
+
+def sel_services_graphical():
+    '''Select services with graphics'''
+
+    os.system('sleep 1')
+    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" --separator="," > .services.txt')
+
+def sel_services_text():
+    '''Select services with text'''
+
+    print('Text')
+
 def service_dns():
     '''Install and configure dns service (bind)'''
     
@@ -226,7 +257,7 @@ generate_environment()  # generate the environment that you have selected
 if type_env == 1:
     services_by_default()  # install services by default
 elif type_env == 2:
-    print('Personalized')
+    services_by_personalized()
 
 
 
