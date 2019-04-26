@@ -179,7 +179,9 @@ def sel_services_graphical():
     '''Select services with graphics'''
 
     os.system('sleep 1')
-    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" --separator="," > .services.txt')
+    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" --separator="\n" > .services.txt')
+
+
 
 def sel_services_text():
     '''Select services with text'''
@@ -258,12 +260,5 @@ if type_env == 1:
     services_by_default()  # install services by defaultt
 elif type_env == 2:
     services_by_personalized()
-
-
-
-
-
-
-
 
 

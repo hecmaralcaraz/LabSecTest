@@ -1,10 +1,10 @@
 #!/bin/bash
 
 cd server
-vagrant up &
+vagrant up 1> .log_start.log &
 
 cd ../client
-vagrant up &
+vagrant up 1> .log_start.log &
 
 cd ../tester
-vagrant up &
+vagrant up 1> .log_start.log &

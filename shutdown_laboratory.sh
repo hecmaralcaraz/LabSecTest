@@ -1,10 +1,10 @@
 #!/bin/bash
 
 cd server
-vagrant halt &
+vagrant halt 1> .log_shutdown.log &
 
 cd ../client
-vagrant halt &
+vagrant halt 1> .log_shutdown.log &
 
 cd ../tester
-vagrant halt &
+vagrant halt 1> .log_shutdown.log &

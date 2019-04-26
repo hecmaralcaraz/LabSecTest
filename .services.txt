@@ -1,1 +1,4 @@
-DHCP,DNS,FTP,Mail
+DHCP
+DNS
+FTP
+Mail
