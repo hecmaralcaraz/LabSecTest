@@ -14,7 +14,12 @@ def requirments():
     '''show/install the requirments to use this laboratory'''
     os.system("clear")
     print('\n')
-    print('REQUIRMENTS:') 
+    print('REQUIRMENTS:\n') 
+    print('--> VirtualBox >= 5.2')
+    print('--> Vagrant >= 2.2.4')
+    print('--> Zenity')
+    print('--> Python >= 3')
+    print('--> Shell bash\n')
     input("Press ENTER to continue...") 
 
 def welcome():
