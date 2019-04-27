@@ -286,10 +286,11 @@ def service_mysql():
     file.write('\n#MYSQL service' + os.linesep)
     file.write('echo "mysql-server-5.6 mysql-server/root_password password ubuntu" | debconf-set-selections' + os.linesep)
     file.write('echo "mysql-server-5.6 mysql-server/root_password_again password ubuntu" | debconf-set-selections' + os.linesep)
-    file.write('apt install mysql-server' + os.linesep)
-    file.write('mysql -u root -pubuntu -e "create user \'hector\'@\'%\' identified by \'hector\';"' + os.linesep)
-    file.write('GRANT ALL PRIVILEGES ON *.* TO hector@\'%\';' + os.linesep)
-    file.write('FLUSH PRIVILEGES;' + os.linesep)
+    file.write('apt install -y mysql-server' + os.linesep)
+    file.write('mysql -u root -pubuntu -e "create user \'hector\'@\'%\' identified by \'hector\'"' + os.linesep)
+    file.write('mysql -u root -pubuntu -e "GRANT ALL PRIVILEGES ON *.* TO hector@\'%\'"' + os.linesep)
+    file.write('mysql -u root -pubuntu -e "FLUSH PRIVILEGES"' + os.linesep)
+    file.write('cp /vagrant/services/mysql/my.cnf /etc/mysql/my.cnf' + os.linesep)
     file.close()
 
 def service_ftp():
