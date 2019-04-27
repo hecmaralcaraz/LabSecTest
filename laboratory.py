@@ -97,7 +97,7 @@ def generate_MV(path,hostname,network):
 
 
     file.write('    config.vm.provider "virtualbox" do |vb|' + os.linesep)
-    file.write('        vb.memory = "512"' + os.linesep)  # RAM of the virtual machine
+    file.write('        vb.memory = "1024"' + os.linesep)  # RAM of the virtual machine
     file.write('    end' + os.linesep)
     file.write('config.vm.provision "shell", path: "script.sh"' + os.linesep)    
     file.write('end')
