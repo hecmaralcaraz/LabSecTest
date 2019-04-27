@@ -160,10 +160,10 @@ def generate_conf_tester():
 
 def services_by_default():
     '''Install all services and all configurations in server''' 
-    service_dns()
-    service_dhcp()
-    service_mysql()
-    service_ftp()
+    #service_dns()
+    #service_dhcp()
+    #service_mysql()
+    #service_ftp()
     service_mail()
 
 def services_by_personalized():
@@ -325,7 +325,7 @@ def service_mail():
     file.write('apt install -y postfix' + os.linesep)
     file.write('DEBIAN_FRONTEND=noninteractive apt install -y courier-imap' + os.linesep)
     file.write('apt install -y mailutils' + os.linesep)
-    file.write('cp /vagrant/services/mail/postfix/* /etc/postfix/' + os.linesep)
+    file.write('cp -R /vagrant/services/mail/postfix/* /etc/postfix/' + os.linesep)
     file.close()
 
 # Estructure
