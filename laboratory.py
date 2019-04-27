@@ -162,9 +162,9 @@ def services_by_default():
     '''Install all services and all configurations in server''' 
     #service_dns()
     #service_dhcp()
-    #service_mysql()
+    service_mysql()
     #service_ftp()
-    service_mail()
+    #service_mail()
 
 def services_by_personalized():
     '''Install the services you want'''
