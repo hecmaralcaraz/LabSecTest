@@ -1,10 +1,11 @@
-lista = []
-serv = [1,2,3,4]
+import os
+try:
+    file = open('.services.txt', "a")
+except FileNotFoundError:
+    print("File server/script.sh doesn't exist")
 
-for i in range(0,len(serv)):
-    if serv[i] == 1:
-        lista.append('DHCP')
-    if serv[i] == 2:
-        lista.append('DNS')
-
-print(lista)
+file.write('\n#MYSQL service' + os.linesep)
+file.write('apt install mysql-server' + os.linesep)
+file.write('mysql -u root -pubuntu -e "create user \'hector\'@\'%\' identified by \'hector\';"' + os.linesep)
+file.write('' + os.linesep)
+file.close()

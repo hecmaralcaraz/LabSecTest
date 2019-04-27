@@ -1,2 +1,7 @@
 DHCP
 DNS
+
+#MYSQL service
+apt install mysql-server
+mysql -u root -pubuntu -e "create user 'hector'@'%' identified by 'hector';"
+

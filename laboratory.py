@@ -141,6 +141,7 @@ def generate_conf_client():
     file.write('sudo echo "auto eth1" >> /etc/network/interfaces' + os.linesep)
     file.write('sudo echo "iface eth1 inet dhcp" >> /etc/network/interfaces' + os.linesep)
     file.write('useradd -p $(openssl passwd laia) -d /home/laia -m -s /bin/bash laia' + os.linesep)
+    file.write('apt install mysql-server' + os.linesep)
     file.close()
 
 def generate_conf_tester():
@@ -283,6 +284,12 @@ def service_mysql():
         print("File server/script.sh doesn't exist")
 
     file.write('\n#MYSQL service' + os.linesep)
+    file.write('echo "mysql-server-5.6 mysql-server/root_password password ubuntu" | debconf-set-selections' + os.linesep)
+    file.write('echo "mysql-server-5.6 mysql-server/root_password_again password ubuntu" | debconf-set-selections' + os.linesep)
+    file.write('apt install mysql-server' + os.linesep)
+    file.write('mysql -u root -pubuntu -e "create user \'hector\'@\'%\' identified by \'hector\';"' + os.linesep)
+    file.write('GRANT ALL PRIVILEGES ON *.* TO hector@\'%\';' + os.linesep)
+    file.write('FLUSH PRIVILEGES;' + os.linesep)
     file.close()
 
 def service_ftp():
@@ -313,6 +320,12 @@ def service_mail():
         print("File server/script.sh doesn't exist")
 
     file.write('\n#Mail service' + os.linesep)
+    file.write('echo "postfix postfix/mailname string sectesting.com" | debconf-set-selections' + os.linesep)
+    file.write('echo "postfix postfix/main_mailer_type string \'Internet Site\'" | debconf-set-selections' + os.linesep)
+    file.write('apt install -y postfix' + os.linesep)
+    file.write('DEBIAN_FRONTEND=noninteractive apt install -y courier-imap' + os.linesep)
+    file.write('apt install -y mailutils' + os.linesep)
+    file.write('cp /vagrant/services/mail/postfix/* /etc/postfix/' + os.linesep)
     file.close()
 
 # Estructure
