@@ -163,6 +163,7 @@ def services_by_default():
     service_dhcp()
     service_mysql()
     service_ftp()
+    service_mail()
 
 def services_by_personalized():
     '''Install the services you want'''
@@ -178,8 +179,18 @@ def services_by_personalized():
         service = sel_services_graphical()
     elif option == 2:
         service = sel_services_text()
-    print(service)
-
+    
+    # install the services
+    if 'DHCP' in service:
+        service_dhcp()
+    if 'DNS' in service:
+        service_dns()
+    if 'FTP' in service:
+        service_ftp()
+    if 'MYSQL' in service:
+        service_mysql()
+    if 'Mail' in services:
+        service_mail()
 
 def sel_services_graphical():
     '''Select services with graphics'''
@@ -197,8 +208,40 @@ def sel_services_graphical():
 
 def sel_services_text():
     '''Select services with text'''
+    option = str()
+    service = ["","","","",""]
+    lista = []
+    count = int(0)
+    print('\nPlease select all services you want:')
+    print('1) DHCP')
+    print('2) DNS')
+    print('3) FTP')
+    print('4) MYSQL')
+    print('5) Mail')
+    print('Type the number of services separated with " , "')
+    print('Example: 1,2,3,4,5')
+    option=(input('\n>'))
 
-    print('Text')
+    # collet the services with numbers
+    for i in range(0,len(option)):
+        if option[i] == ',':
+            count += 1
+        service[count] = service[count] + option[i]
+    print(service)
+
+    # transform the numbers into services
+    for x in range(0,len(service)):
+        if service[x] == '1':
+            lista.append('DHCP')
+        if service[x] == '2':
+            lista.append('DNS')
+        if service[x] == '3':
+            lista.append('FTP')
+        if service[x] == '4':
+            lista.append('MYSQL')
+        if service[x] == '5': 
+            lista.append('Mail')
+    print(lista)
 
 def service_dns():
     '''Install and configure dns service (bind)'''
@@ -261,6 +304,16 @@ def service_ftp():
 
     file.close()
 
+def service_mail():
+    '''Install and configure mail (postfix, courier)'''
+
+    try:
+        file = open('server/script.sh', "a")
+    except FileNotFoundError:
+        print("File server/script.sh doesn't exist")
+
+    file.write('\n#Mail service' + os.linesep)
+    file.close()
 
 # Estructure
 
@@ -269,8 +322,8 @@ welcome()  # welcome to learning
 type_env = environment()  # select the environment
 generate_environment()  # generate the environment that you have selected
 if type_env == 1:
-    services_by_default()  # install services by defaultt
+    services_by_default()  # install services by default
 elif type_env == 2:
-    services_by_personalized()
+    services_by_personalized()  # install services personalized
 
 
