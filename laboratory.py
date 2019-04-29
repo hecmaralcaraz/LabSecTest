@@ -219,14 +219,12 @@ def sel_services_text():
     print('3) FTP')
     print('4) MYSQL')
     print('5) Mail')
-    print('Type the number of services separated with " , "')
-    print('Example: 1,2,3,4,5')
+    print('Type the number of services without separation)
+    print('Example: 12345')
     option=(input('\n>'))
 
     # collet the services with numbers
     for i in range(0,len(option)):
-        if option[i] == ',':
-            count += 1
         service[count] = service[count] + option[i]
     print(service)
 
