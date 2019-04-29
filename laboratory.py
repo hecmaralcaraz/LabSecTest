@@ -219,13 +219,14 @@ def sel_services_text():
     print('3) FTP')
     print('4) MYSQL')
     print('5) Mail')
-    print('Type the number of services without separation)
+    print('Type the number of services without separation')
     print('Example: 12345')
     option=(input('\n>'))
 
     # collet the services with numbers
     for i in range(0,len(option)):
-        service[count] = service[count] + option[i]
+        service[i] = service[i] + option[i]
+        print(i)
     print(service)
 
     # transform the numbers into services
@@ -241,6 +242,7 @@ def sel_services_text():
         if service[x] == '5': 
             lista.append('Mail')
     print(lista)
+    return lista
 
 def service_dns():
     '''Install and configure dns service (bind)'''
