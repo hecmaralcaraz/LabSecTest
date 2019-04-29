@@ -181,6 +181,7 @@ def services_by_personalized():
     elif option == 2:
         service = sel_services_text()
     
+    print(service)
     # install the services
     if 'DHCP' in service:
         service_dhcp()
@@ -226,8 +227,6 @@ def sel_services_text():
     # collet the services with numbers
     for i in range(0,len(option)):
         service[i] = service[i] + option[i]
-        print(i)
-    print(service)
 
     # transform the numbers into services
     for x in range(0,len(service)):
@@ -241,8 +240,12 @@ def sel_services_text():
             lista.append('MYSQL')
         if service[x] == '5': 
             lista.append('Mail')
-    print(lista)
     return lista
+
+def end():
+    '''end'''
+    os.system('clear')
+    print('END!')
 
 def service_dns():
     '''Install and configure dns service (bind)'''
@@ -339,5 +342,6 @@ if type_env == 1:
     services_by_default()  # install services by default
 elif type_env == 2:
     services_by_personalized()  # install services personalized
+end()
 
 
