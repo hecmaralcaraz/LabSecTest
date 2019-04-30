@@ -1,11 +1,9 @@
-import os
-try:
-    file = open('.services.txt', "a")
-except FileNotFoundError:
-    print("File server/script.sh doesn't exist")
+print(chr(27)+"[1;33m"+"Texto en negrita de color amarillo") 
+print("\x1b[1;33m"+"Texto en negrita de color amarillo") 
+print("\033[4;35m"+"Texto en negrita y subrayado de color morado") 
+print("\033[4;35m""Texto en negrita y subrayado de color morado")
+print("\033[1;33m"+"Texto en negrita color amarillo"+'\033[0;m') 
+print("\033[;31m"+"Texto normal de color cian")
+print("\033[4;35;47m"+"Texto subr morado sobre blanco"+'\033[0;m') 
+print("\033[4;31m"+"Texto normal subr color morado"+'\033[0;m')
 
-file.write('\n#MYSQL service' + os.linesep)
-file.write('apt install mysql-server' + os.linesep)
-file.write('mysql -u root -pubuntu -e "create user \'hector\'@\'%\' identified by \'hector\';"' + os.linesep)
-file.write('' + os.linesep)
-file.close()

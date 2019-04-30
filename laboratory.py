@@ -245,7 +245,27 @@ def sel_services_text():
 def end():
     '''end'''
     os.system('clear')
-    print('END!')
+    print()
+    print('Congratulations!')
+    print('Now you have the environment pre configured.')
+    print('To install the environment you need execute this script:' + "\033[;32m"+" first_time.sh"+'\033[0;m')
+    print('Example: ./first_time.sh')
+    print()
+    print('*You only need execute the before script the first time* <--')
+    print('')
+    print('When the installation ends to up the all machines you need execute:' + "\033[;31m"+" start_laboratory.sh"+'\033[0;m')
+    print('Example: ./start_laboratory.sh ')
+    print()
+    print('To shutdown the all machines you need execute:' + "\033[;33m"+" shutdown_laboratory.sh"+'\033[0;m')
+    print('Example: ./shutdown_laboratory.sh ')
+    print()
+    print('To connect to the machine "tester" you need go to directori "tester" and execute:' + "\033[;34m"+" vagrant ssh"+'\033[0;m')
+    print('Example: cd tester && vagrant ssh')
+    print('Inside this machine you find all tutorials and examples preparated for you.')
+    print('Learn and enjoy! Good hacking')
+    print()
+    print('(You have all steps to install,configure and use this program into README.TXT)')
+    print()
 
 def service_dns():
     '''Install and configure dns service (bind)'''
@@ -343,5 +363,3 @@ if type_env == 1:
 elif type_env == 2:
     services_by_personalized()  # install services personalized
 end()
-
-
