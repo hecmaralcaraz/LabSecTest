@@ -168,18 +168,52 @@ def services_by_default():
 
 def services_by_personalized():
     '''Install the services you want'''
-    services = []
+    service = []
     option = int(0)
+    option2 = int(0)
     os.system('clear')
-    print('You have selected to install the services in a personalized way.') 
-    print('You have two ways of doing it: \n')
-    print('1) Graphical (recommended)')
-    print('2) Text\n')
-    option = check_two_options()
-    if option == 1:
-        service = sel_services_graphical()
-    elif option == 2:
-        service = sel_services_text()
+    y = bool(0)
+    end_services = str('')
+
+    while y == 0:
+        # To select the services you can do it in two ways (graphical | text)
+        print('You have selected to install the services in a personalized way.') 
+        print('You have two ways of doing it: \n')
+        print('1) Graphical (recommended)')
+        print('2) Text\n')
+        option = check_two_options()  # check if only is 1 or 2
+        if option == 1:
+            service = sel_services_graphical()  # Return a list with the services
+        elif option == 2:
+            service = sel_services_text()  # Return a list with the services
+
+        # check if the services they're right
+        print()
+        print('You have select the next services:')
+        if len(service) == 1:  # if only have selected 1 service
+            end_services = service[0]
+        else:
+            for y in range(0,len(service)):
+                end_services += service[y] +  ','  # concatenate the services with ","
+            end_services = end_services[:-1]  # list of services - last ,
+        print(end_services)  # print the selected services
+
+        # check the if the option is "y" or "n"
+        x = 0
+        while x == 0:
+            print('Are you sure? (y|n)')
+            option2 = input('\n>')
+            if option2 == 'y':  # if all is right go to next way
+                x = 1
+                y = 1
+            elif option2 == 'n':  # if all not is right, go to before way
+                x = 1
+                y = 0
+                os.system('clear')
+            else:  # if option2 is different to "y" or "n"
+                print('Please type "y" or "n"')
+                x = 0
+        
     
     print(service)
     # install the services
@@ -191,7 +225,7 @@ def services_by_personalized():
         service_ftp()
     if 'MYSQL' in service:
         service_mysql()
-    if 'Mail' in services:
+    if 'Mail' in service:
         service_mail()
 
 def sel_services_graphical():
@@ -210,7 +244,7 @@ def sel_services_graphical():
 
 def sel_services_text():
     '''Select services with text'''
-    option = str()
+    option = str('')
     service = ["","","","",""]
     lista = []
     count = int(0)
@@ -264,7 +298,7 @@ def end():
     print('Inside this machine you find all tutorials and examples preparated for you.')
     print('Learn and enjoy! Good hacking')
     print()
-    print("\033[1;31m"+"(You have all steps to install, configure and use this program into README.TXT)"+'\033[0;m')
+    print("\033[1;31m"+"(You have all steps to install, configure and use this program into MANUAL.TXT)"+'\033[0;m')
     print()
 
 def service_dns():
