@@ -15,7 +15,7 @@ def requirments():
     '''show/install the requirments to use this laboratory'''
     os.system("clear")
     print('\n')
-    print('REQUIRMENTS:\n')
+    print('Requirments to use this program:\n')
     print('--> VirtualBox', check_version('vboxmanage --version'))
     print('--> Vagrant' , check_version('vagrant --version'))
     print('--> Zenity', check_version('zenity --version'))
@@ -57,7 +57,6 @@ def welcome():
     print()
     print('In this laboratory you will work as if you were a malicious employee of a company. You work with the Virutal machine "Tester".')
     print('Inside the MV tester you have a little tutorials and instructions to practice. This type of pentesting is called "gray box", since you have part of the system information.\n') 
-    print('After the installation to acces the MV tester you need type "vagrant ssh" in the console shell.\n')   
     input("Press ENTER to continue...")
 
 def check_two_options():
