@@ -3,6 +3,7 @@
 # 05/04/2019
 
 import os
+import subprocess
 
 # Variables
 
@@ -14,13 +15,22 @@ def requirments():
     '''show/install the requirments to use this laboratory'''
     os.system("clear")
     print('\n')
-    print('REQUIRMENTS:\n') 
-    print('--> VirtualBox >= 5.2')
-    print('--> Vagrant >= 2.2.4')
-    print('--> Zenity')
-    print('--> Python >= 3')
-    print('--> Shell bash\n')
-    input("Press ENTER to continue...") 
+    print('REQUIRMENTS:\n')
+    print('--> VirtualBox', check_version('vboxmanage --version'))
+    print('--> Vagrant' , check_version('vagrant --version'))
+    print('--> Zenity', check_version('zenity --version'))
+    print('--> Python >= 3', check_version('python3 --version'))
+    input("\nPress ENTER to continue...") 
+
+def check_version(cmd):
+    '''Check the version of program'''
+
+    x = subprocess.getstatusoutput(cmd)  # collect the code error
+
+    if x[0] > 0:
+        return "\033[1;31m"+"--> no ok"+'\033[0;m'
+    elif x[0] == 0:
+        return "\033[1;32m"+"--> ok"+'\033[0;m'
 
 def welcome():
     '''text of welcome'''
@@ -75,8 +85,9 @@ def environment():
     print("2) Personalized")  
     return check_two_options()
 
-def generate_MV(path,hostname,network):
+def generate_MV(path,hostname,network,ram):
     '''Generate/write Vagrantfile with vagrant configurations'''
+    ram = str(ram)
     try:
         file = open(path + 'Vagrantfile', "w")
     except FileNotFoundError:
@@ -97,7 +108,7 @@ def generate_MV(path,hostname,network):
 
 
     file.write('    config.vm.provider "virtualbox" do |vb|' + os.linesep)
-    file.write('        vb.memory = "1024"' + os.linesep)  # RAM of the virtual machine
+    file.write('        vb.memory = "' + ram + '"' + os.linesep)  # RAM of the virtual machine
     file.write('    end' + os.linesep)
     file.write('config.vm.provision "shell", path: "script.sh"' + os.linesep)    
     file.write('end')
@@ -109,20 +120,23 @@ def generate_environment():
     path = 'server/'
     hostname = 'server.sectesting.com'
     network = '1'
-    generate_MV(path,hostname,network)  # create Vagrantfile
+    ram = 1024
+    generate_MV(path,hostname,network,ram)  # create Vagrantfile
 
     #Generate client
     path = 'client/'
     hostname = 'client.sectesting.com'
     network = '2'
-    generate_MV(path,hostname,network)  # create Vagrantfile
+    ram = 512
+    generate_MV(path,hostname,network,ram)  # create Vagrantfile
     generate_conf_client()  # generate client configurations (script.sh)
 
     #Generate tester
     path = 'tester/'
     hostname = 'tester.sectesting.com'
     network = '2'
-    generate_MV(path,hostname,network)  # create Vagrantfile
+    ram = 512
+    generate_MV(path,hostname,network,ram)  # create Vagrantfile
     generate_conf_tester()  # generate tester configurations (script.sh)
 
     os.system('touch server/script.sh')
@@ -160,11 +174,11 @@ def generate_conf_tester():
 
 def services_by_default():
     '''Install all services and all configurations in server''' 
-    #service_dns()
-    #service_dhcp()
+    service_dns()
+    service_dhcp()
     service_mysql()
-    #service_ftp()
-    #service_mail()
+    service_ftp()
+    service_mail()
 
 def services_by_personalized():
     '''Install the services you want'''
@@ -173,9 +187,9 @@ def services_by_personalized():
     option2 = int(0)
     os.system('clear')
     y = bool(0)
-    end_services = str('')
 
     while y == 0:
+        end_services = str('')
         # To select the services you can do it in two ways (graphical | text)
         print('You have selected to install the services in a personalized way.') 
         print('You have two ways of doing it: \n')
@@ -232,7 +246,7 @@ def sel_services_graphical():
     '''Select services with graphics'''
     service = []
     # Open a graphic multiselect (services)
-    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" --separator="\n" > .services.txt')
+    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" FALSE "MYSQL" --separator="\n" > .services.txt')
     
     # Add all lines in a list
     file = open(".services.txt")
