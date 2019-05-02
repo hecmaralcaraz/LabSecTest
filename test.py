@@ -6,4 +6,3 @@ print("\033[1;33m"+"Texto en negrita color amarillo"+'\033[0;m')
 print("\033[;31m"+"Texto normal de color cian")
 print("\033[4;35;47m"+"Texto subr morado sobre blanco"+'\033[0;m') 
 print("\033[4;31m"+"Texto normal subr color morado"+'\033[0;m')
-
