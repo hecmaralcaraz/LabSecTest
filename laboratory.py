@@ -171,6 +171,13 @@ def generate_conf_tester():
     file.write('sudo echo "iface eth1 inet dhcp" >> /etc/network/interfaces' + os.linesep)
     file.close()
 
+def generate_conf_server(type_env):
+    '''Generate server configurations (script.sh)'''
+    if type_env == 1:
+        services_by_default()  # install services by default
+    elif type_env == 2:
+        services_by_personalized()  # install services personalized
+
 def services_by_default():
     '''Install all services and all configurations in server''' 
     service_dns()
@@ -405,8 +412,5 @@ requirments()  # show/install the requirments to use this laboratory
 welcome()  # welcome to learning
 type_env = environment()  # select the environment
 generate_environment()  # generate the environment that you have selected
-if type_env == 1:
-    services_by_default()  # install services by default
-elif type_env == 2:
-    services_by_personalized()  # install services personalized
+generate_conf_server(type_env)
 end()
