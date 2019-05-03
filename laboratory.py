@@ -411,6 +411,6 @@ def service_mail():
 requirments()  # show/install the requirments to use this laboratory
 welcome()  # welcome to learning
 type_env = environment()  # select the environment
-generate_environment()  # generate the environment that you have selected
 generate_conf_server(type_env)
+generate_environment()  # generate the environment that you have selected
 end()
