@@ -11,7 +11,40 @@ type_env = int(0)
 version_error = int(0)
 
 
+# Functions to check
+
+def check_version(cmd):
+    '''Check the version of program'''
+    global version_error
+
+    x = subprocess.getstatusoutput(cmd)  # collect the code error
+
+    if x[0] > 0:
+        version_error = 1  # to check the requirements
+        return "\033[1;31m"+"--> no ok"+'\033[0;m'
+    elif x[0] == 0:
+        return "\033[1;32m"+"--> ok"+'\033[0;m'
+
+def check_two_options():
+    '''Check two options'''
+    y = bool(0)
+    option = int(0)
+    while y == 0:
+        option = input("select an option (1|2) \n>")
+        if option == '1':
+            return 1
+            y = 1
+        elif option == '2':
+            return 2
+            y = 1
+        print('\nPlease type 1 or 2')
+    
+def check_services():
+    '''Check if servives by graphical is correct'''
+
+
 # Funtions
+
 def requirments():
     '''show/install the requirments to use this laboratory'''
     os.system("clear")
@@ -22,24 +55,11 @@ def requirments():
     print('--> Zenity', check_version('zenity --version'))
     print('--> Python >= 3', check_version('python3 --version'))
     
-    if version_error == 1:
+    if version_error == 1:  # if a requirement fails exit to program
         print ('\nPlease install all programs/dependencies required to use this program.\n')
         exit()
     
     input("\nPress ENTER to continue...") 
-
-
-def check_version(cmd):
-    '''Check the version of program'''
-    global version_error
-
-    x = subprocess.getstatusoutput(cmd)  # collect the code error
-
-    if x[0] > 0:
-        version_error = 1
-        return "\033[1;31m"+"--> no ok"+'\033[0;m'
-    elif x[0] == 0:
-        return "\033[1;32m"+"--> ok"+'\033[0;m'
 
 def welcome():
     '''text of welcome'''
@@ -67,20 +87,6 @@ def welcome():
     print('In this laboratory you will work as if you were a malicious employee of a company. You work with the Virutal machine "Tester".')
     print('Inside the MV tester you have a little tutorials and instructions to practice. This type of pentesting is called "gray box", since you have part of the system information.\n') 
     input("Press ENTER to continue...")
-
-def check_two_options():
-    '''Check two options'''
-    y = bool(0)
-    option = int(0)
-    while y == 0:
-        option = input("select an option (1|2) \n>")
-        if option == '1':
-            return 1
-            y = 1
-        elif option == '2':
-            return 2
-            y = 1
-        print('\nPlease type 1 or 2')
 
 def environment():
     '''Select the environment'''
@@ -242,8 +248,6 @@ def services_by_personalized():
             else:  # if option2 is different to "y" or "n"
                 print('Please type "y" or "n"')
                 x = 0
-        
-    
     print(service)
     # install the services
     if 'DHCP' in service:
@@ -269,7 +273,6 @@ def sel_services_graphical():
         service.append(line[:-1])
 
     return service
-
 
 def sel_services_text():
     '''Select services with text'''
@@ -306,7 +309,7 @@ def sel_services_text():
     return lista
 
 def end():
-    '''end'''
+    '''text of end'''
     os.system('clear')
     print()
     print('Congratulations!')
@@ -329,6 +332,8 @@ def end():
     print()
     print("\033[1;31m"+"(You have all steps to install, configure and use this program into MANUAL.TXT)"+'\033[0;m')
     print()
+
+# Services
 
 def service_dns():
     '''Install and configure dns service (bind)'''
