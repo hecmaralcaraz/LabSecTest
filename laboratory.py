@@ -8,6 +8,7 @@ import subprocess
 # Variables
 
 type_env = int(0)
+version_error = int(0)
 
 
 # Funtions
@@ -20,14 +21,22 @@ def requirments():
     print('--> Vagrant' , check_version('vagrant --version'))
     print('--> Zenity', check_version('zenity --version'))
     print('--> Python >= 3', check_version('python3 --version'))
+    
+    if version_error == 1:
+        print ('\nPlease install all programs/dependencies required to use this program.\n')
+        exit()
+    
     input("\nPress ENTER to continue...") 
+
 
 def check_version(cmd):
     '''Check the version of program'''
+    global version_error
 
     x = subprocess.getstatusoutput(cmd)  # collect the code error
 
     if x[0] > 0:
+        version_error = 1
         return "\033[1;31m"+"--> no ok"+'\033[0;m'
     elif x[0] == 0:
         return "\033[1;32m"+"--> ok"+'\033[0;m'
