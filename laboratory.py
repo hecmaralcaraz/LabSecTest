@@ -184,6 +184,8 @@ def generate_conf_tester():
     # network configuration
     file.write('sudo echo "auto eth1" >> /etc/network/interfaces' + os.linesep)
     file.write('sudo echo "iface eth1 inet dhcp" >> /etc/network/interfaces' + os.linesep)
+    file.write('mkdir -p /home/vagrant/tutorials/1collectInformation' + os.linesep)
+    file.write('mkdir -p /root/tutorials/1collectInformation' + os.linesep)
     file.close()
 
 def generate_conf_server(type_env):
