@@ -1,13 +1,14 @@
 #!/bin/bash
 
 cd server
-vagrant up 1> .log_start.log &
+time vagrant up >> ../.log_start.log
 
 cd ../client
-vagrant up 1> .log_start.log &
-vagrant reload 1> .log_start.log &
+time vagrant up >> ../.log_start.log
+time vagrant reload >> ../.log_start.log
 
 cd ../tester
-vagrant up 1> .log_start.log &
-vagrant reload 1> .log_start.log &
+time vagrant up >> ../.log_start.log
+time vagrant >> ../.log_start.log
+clear
 echo "ok"

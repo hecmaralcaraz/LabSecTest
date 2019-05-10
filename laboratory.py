@@ -186,6 +186,7 @@ def generate_conf_tester():
     file.write('sudo echo "iface eth1 inet dhcp" >> /etc/network/interfaces' + os.linesep)
     file.write('mkdir -p /home/vagrant/tutorials/1collectInformation' + os.linesep)
     file.write('mkdir -p /root/tutorials/1collectInformation' + os.linesep)
+    file.write('apt install -y nmap' + os.linesep)
     file.close()
 
 def generate_conf_server(type_env):
@@ -427,6 +428,6 @@ def service_mail():
 requirments()  # show/install the requirments to use this laboratory
 welcome()  # welcome to learning
 type_env = environment()  # select the environment
-generate_conf_server(type_env)
 generate_environment()  # generate the environment that you have selected
+generate_conf_server(type_env)
 end()
