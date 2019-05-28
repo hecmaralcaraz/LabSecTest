@@ -1,6 +1,9 @@
 #!/usr/bin/python3.6
-# Hèctor Martínez
-# 05/04/2019
+# Hèctor Martínez Alcaraz
+# github.com/hecmaralcaraz
+# 28/05/2019
+
+# This program type the vagrant config to create a environment to test pentesting.
 
 import os
 import subprocess
