@@ -40,7 +40,19 @@ def check_two_options():
         print('\nPlease type 1 or 2')
     
 def check_services():
-    '''Check if servives by graphical is correct'''
+    '''Check if services by text is correct'''
+    option = int(0)
+    while True:
+        option = input('\n>')
+        if option.isnumeric(): # check is option is a number
+            if "1" in option or "2" in option or "2" in option or "3" in option or "4" in option or "5" in option: # check if option contain 1|2|3|4|5
+                return option 
+            else:
+                print('Not is correct, please type a number between 1 and 5.')
+        else:
+            print ("\nNot is correct, try again.")
+            print('Type the number of services without separation')
+            print('Example: 12345')
 
 
 # Funtions
@@ -134,7 +146,7 @@ def generate_environment():
     path = 'server/'
     hostname = 'server.sectesting.com'
     network = '1'
-    ram = 1024
+    ram = 512
     generate_MV(path,hostname,network,ram)  # create Vagrantfile
 
     #Generate client
@@ -149,7 +161,7 @@ def generate_environment():
     path = 'tester/'
     hostname = 'tester.sectesting.com'
     network = '2'
-    ram = 512
+    ram = 1024
     generate_MV(path,hostname,network,ram)  # create Vagrantfile
     generate_conf_tester()  # generate tester configurations (script.sh)
 
@@ -279,7 +291,7 @@ def sel_services_graphical():
 
 def sel_services_text():
     '''Select services with text'''
-    option = str('')
+    option = int()
     service = ["","","","",""]
     lista = []
     count = int(0)
@@ -290,8 +302,8 @@ def sel_services_text():
     print('4) MYSQL')
     print('5) Mail')
     print('Type the number of services without separation')
-    print('Example: 12345')
-    option=(input('\n>'))
+    print('Example: 12345\n')
+    option = check_services()  # check if is correct
 
     # collet the services with numbers
     for i in range(0,len(option)):

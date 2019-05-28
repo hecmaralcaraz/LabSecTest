@@ -1,5 +1,2 @@
 DHCP
 DNS
-FTP
-Mail
-MYSQL
