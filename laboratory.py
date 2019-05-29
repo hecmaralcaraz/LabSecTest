@@ -400,6 +400,7 @@ def service_mysql():
     file.write('mysql -u root -pubuntu -e "GRANT ALL PRIVILEGES ON *.* TO hector@\'%\'"' + os.linesep)
     file.write('mysql -u root -pubuntu -e "FLUSH PRIVILEGES"' + os.linesep)
     file.write('cp /vagrant/services/mysql/my.cnf /etc/mysql/my.cnf' + os.linesep)
+    file.write('mysql -u root -pubuntu < /vagrant/world.sql' + os.linesep)
     file.close()
 
 def service_ftp():
