@@ -9,4 +9,7 @@ vagrant up >> ../.log_start.log
 cd ../tester
 vagrant up >> ../.log_start.log
 clear
-echo "ok"
+echo "Please go to directory tester and execute vagrant ssh"
+echo "Example:"
+echo "$ cd tester"
+echo "$ vagrant ssh"
