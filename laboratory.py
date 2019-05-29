@@ -286,7 +286,7 @@ def sel_services_graphical():
     '''Select services with graphics'''
     service = []
     # Open a graphic multiselect (services)
-    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" FALSE "MYSQL" "Apache" FALSE--separator="\n" > .services.txt')
+    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" FALSE "MYSQL" FALSE "Apache" --separator="\n" > .services.txt')
     
     # Add all lines in a list
     file = open(".services.txt")
