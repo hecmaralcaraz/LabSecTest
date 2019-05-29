@@ -203,6 +203,7 @@ def generate_conf_tester():
     file.write('mkdir -p /home/vagrant/tutorials/1collectInformation' + os.linesep)
     file.write('mkdir -p /root/tutorials/1collectInformation' + os.linesep)
     file.write('apt install -y nmap' + os.linesep)
+    file.write('apt install -y dsniff' + os.linesep)
     file.close()
 
 def generate_conf_server(type_env):
