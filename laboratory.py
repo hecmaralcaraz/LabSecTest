@@ -218,6 +218,7 @@ def services_by_default():
     service_mysql()
     service_ftp()
     service_mail()
+    service_apache()
 
 def services_by_personalized():
     '''Install the services you want'''
@@ -278,12 +279,14 @@ def services_by_personalized():
         service_mysql()
     if 'Mail' in service:
         service_mail()
+    if 'Apache' in service:
+        service_apache()
 
 def sel_services_graphical():
     '''Select services with graphics'''
     service = []
     # Open a graphic multiselect (services)
-    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" FALSE "MYSQL" --separator="\n" > .services.txt')
+    os.system('zenity  --list  --text "Select all services you want" --checklist  --column "Select" --column "service" FALSE "DHCP" FALSE "DNS" FALSE "FTP" FALSE "Mail" FALSE "MYSQL" "Apache" FALSE--separator="\n" > .services.txt')
     
     # Add all lines in a list
     file = open(".services.txt")
@@ -295,7 +298,7 @@ def sel_services_graphical():
 def sel_services_text():
     '''Select services with text'''
     option = int()
-    service = ["","","","",""]
+    service = ["","","","","",""]
     lista = []
     count = int(0)
     print('\nPlease select all services you want:')
@@ -304,8 +307,9 @@ def sel_services_text():
     print('3) FTP')
     print('4) MYSQL')
     print('5) Mail')
+    print('6) Apache')
     print('Type the number of services without separation')
-    print('Example: 12345\n')
+    print('Example: 123456\n')
     option = check_services()  # check if is correct
 
     # collet the services with numbers
@@ -324,6 +328,8 @@ def sel_services_text():
             lista.append('MYSQL')
         if service[x] == '5': 
             lista.append('Mail')
+        if service[x] == '6':
+            lista.append('Apache')
     return lista
 
 def end():
@@ -421,6 +427,19 @@ def service_ftp():
     file.write('' + os.linesep)
 
     file.close()
+
+def service_apache():
+    '''Install apache2'''
+    
+    try:
+        file = open('server/script.sh', "a")
+    except FileNotFoundError:
+        print("File server/script.sh doesn't exist")
+
+    file.write('\n#apache2 service' + os.linesep)
+    file.write('apt install -y apache2' + os.linesep)
+    file.close()
+
 
 def service_mail():
     '''Install and configure mail (postfix, courier)'''
