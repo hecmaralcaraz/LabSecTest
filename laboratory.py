@@ -48,14 +48,14 @@ def check_services():
     while True:
         option = input('\n>')
         if option.isnumeric(): # check is option is a number
-            if "1" in option or "2" in option or "2" in option or "3" in option or "4" in option or "5" in option: # check if option contain 1|2|3|4|5
+            if "1" in option or "2" in option or "2" in option or "3" in option or "4" in option or "5" in option or "6" in option: # check if option contain 1|2|3|4|5
                 return option 
             else:
-                print('Not is correct, please type a number between 1 and 5.')
+                print('Not is correct, please type a number between 1 and 6.')
         else:
             print ("\nNot is correct, try again.")
             print('Type the number of services without separation')
-            print('Example: 12345')
+            print('Example: 123456')
 
 
 # Funtions
