@@ -170,7 +170,7 @@ def generate_environment():
 
     os.system('touch server/script.sh')
     os.system('echo "sudo apt update -y" > server/script.sh')
-    os.system('useradd -p $(openssl passwd laia) -d /home/laia -m -s /bin/bash laia >> server/script.sh') # Create a new user to test hydra
+    os.system('echo "useradd -p $(openssl passwd laia) -d /home/laia -m -s /bin/bash laia" >> server/script.sh') # Create a new user to test hydra
 
 def generate_conf_client():
     '''Generate client configuration(script.sh)'''
@@ -185,7 +185,7 @@ def generate_conf_client():
     file.write('sudo echo "auto eth1" >> /etc/network/interfaces' + os.linesep)
     file.write('sudo echo "iface eth1 inet dhcp" >> /etc/network/interfaces' + os.linesep)
     file.write('useradd -p $(openssl passwd laia) -d /home/laia -m -s /bin/bash laia' + os.linesep)
-    file.write('apt install -y mysql-server' + os.linesep)
+    file.write('apt install -y mysql-client' + os.linesep)
     file.close()
 
 def generate_conf_tester():
